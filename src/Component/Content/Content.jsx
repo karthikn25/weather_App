@@ -26,27 +26,36 @@ export default function Content() {
     const fetchWeatherData = async () => {
       try {
         const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=chennai&appid=f9630868795bd2c1c1f97a378f7af746`,
-          { method: "GET" }
+          `https://api.openweathermap.org/data/2.5/weather?q=chennai&appid=f9630868795bd2c1c1f97a378f7af746`
         );
         const weatherData = await res.json();
-        console.log(weatherData);
-        setData(weatherData);
-        console.log(data);
-        const tempValue = data.main.temp - 273.15;
-        const tempValue2 = tempValue.toFixed(2);
-        const humValue = data.main.humidity;
-        setTemp(tempValue2);
-        setHumidity(humValue);
 
-        console.log(temp);
+        console.log("Fetched Weather Data:", weatherData);
+
+        // Safely access weather data before setting state
+        if (weatherData && weatherData.main) {
+          const tempValue = weatherData.main.temp - 273.15; // Convert Kelvin to Celsius
+          const tempValue2 = tempValue.toFixed(2); // Limit to 2 decimals
+          const humValue = weatherData.main.humidity;
+
+          // Update states with fetched data
+          setData(weatherData);
+          setTemp(tempValue2);
+          setHumidity(humValue);
+
+          console.log("Temperature:", tempValue2, "°C");
+          console.log("Humidity:", humValue, "%");
+        } else {
+          console.error("Invalid weather data:", weatherData);
+        }
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching weather data:", error);
       }
     };
 
     fetchWeatherData();
-  }, []);
+  }, []); // Empty dependency array ensures fetch only happens once
+
 
   return (
     <div className="content">
