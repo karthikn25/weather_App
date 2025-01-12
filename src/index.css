@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Charmonman:wght@400;700&family=Inika:wght@400;700&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&display=swap');
+*{
+  padding: 0;
+  margin: 0;
+  font-family: "Libre Bodoni", serif;
+  overflow-x: hidden;
+}
+.container{
+  height: 100%;
+  width: 100%;
+  
+}
