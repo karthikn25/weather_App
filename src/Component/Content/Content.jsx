@@ -32,13 +32,11 @@ export default function Content() {
 
         console.log("Fetched Weather Data:", weatherData);
 
-        // Safely access weather data before setting state
         if (weatherData && weatherData.main) {
-          const tempValue = weatherData.main.temp - 273.15; // Convert Kelvin to Celsius
-          const tempValue2 = tempValue.toFixed(2); // Limit to 2 decimals
+          const tempValue = weatherData.main.temp - 273.15; 
+          const tempValue2 = tempValue.toFixed(2); 
           const humValue = weatherData.main.humidity;
 
-          // Update states with fetched data
           setData(weatherData);
           setTemp(tempValue2);
           setHumidity(humValue);
