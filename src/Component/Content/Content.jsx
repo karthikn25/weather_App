@@ -30,6 +30,7 @@ export default function Content() {
           { method: "GET" }
         );
         const weatherData = await res.json();
+        console.log(weatherData);
         setData(weatherData);
         console.log(data);
         const tempValue = data.main.temp - 273.15;
@@ -88,7 +89,7 @@ export default function Content() {
       </div>
       <div className="second-row">
       <div className="line">
-      <div className="line-box" style={{height:"600px",display:"flex",justifyContent:"center",alignItems:"center"}}>
+      <div className="line-box" style={{height:"700px",display:"flex",justifyContent:"center",alignItems:"center"}}>
       <Line
   data={{
     labels: [temp],  // Use temperature for the x-axis labels (e.g., current temperature)
