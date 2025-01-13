@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./Content.css";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { useParams } from "react-router-dom";
 
 export default function Content() {
   const [currentDate, setCurrentDate] = useState();
   const [currentTime, setCurrentTime] = useState();
-  const [location, setLocation] = useState("delhi");
-  
   const [data, setData] = useState();
   const [temp, setTemp] = useState(null);
   const [humidity, setHumidity] = useState(null);
+  const location=useParams();
+  console.log(location.name);
   useEffect(() => {
     const date = new Date().toDateString();
     const time = new Date().toLocaleTimeString([], {
@@ -24,12 +25,13 @@ export default function Content() {
 
   useEffect(() => {
     const fetchWeatherData = async () => {
+      console.log(import.meta.env.REACT_APP_API);
       try {
         const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=chennai&appid=f9630868795bd2c1c1f97a378f7af746`
+          `https://api.openweathermap.org/data/2.5/weather?q=${location.name}&appid=${import.meta.env.VITE_API_KEY}`
         );
         const weatherData = await res.json();
-
+        console.log(weatherData);
         console.log("Fetched Weather Data:", weatherData);
 
         if (weatherData && weatherData.main) {
@@ -52,7 +54,7 @@ export default function Content() {
     };
 
     fetchWeatherData();
-  }, []); // Empty dependency array ensures fetch only happens once
+  }, []); 
 
 
   return (
@@ -75,7 +77,7 @@ export default function Content() {
               <h6>Location</h6>
             </div>
             <div className="details">
-              <h3>{location}</h3>
+              <h3>{location.name}</h3>
             </div>
           </div>
         </div>
