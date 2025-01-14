@@ -82,9 +82,18 @@ export default function Content() {
 
   defaults.plugins.title.display = true;
   defaults.plugins.title.align = "start";
-  defaults.plugins.title.font.size = 20;
+  defaults.plugins.title.font.size = 30;
   defaults.plugins.title.color = "black";
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      window.location.reload(); // Reload the page every 30 seconds
+    }, 30000); // 30 seconds = 30000 ms
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+  
   return (
     <div className="content">
       <div className="first-row">
@@ -110,10 +119,7 @@ export default function Content() {
           </div>
         </div>
         <div className="gauge">
-          <div
-            className="gauge-box"
-            style={{ height: "300px", width: "300px" }}
-          >
+          <div className="gauge-box">
             <Doughnut
               data={{
                 labels: ["Temperature(°C)", "Humidity(%)"],
