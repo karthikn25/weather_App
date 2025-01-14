@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Content.css";
-import { Chart as ChartJS } from "chart.js/auto";
+import { Chart as ChartJS, defaults } from "chart.js/auto";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { useParams } from "react-router-dom";
 
@@ -10,7 +10,8 @@ export default function Content() {
   const [data, setData] = useState();
   const [temp, setTemp] = useState(null);
   const [humidity, setHumidity] = useState(null);
-  const location=useParams();
+  const location = useParams();
+  const [barData, setBarData] = useState([]);
   console.log(location.name);
   useEffect(() => {
     const date = new Date().toDateString();
@@ -28,15 +29,17 @@ export default function Content() {
       console.log(import.meta.env.REACT_APP_API);
       try {
         const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${location.name}&appid=${import.meta.env.VITE_API_KEY}`
+          `https://api.openweathermap.org/data/2.5/weather?q=${
+            location.name
+          }&appid=${import.meta.env.VITE_API_KEY}`
         );
         const weatherData = await res.json();
         console.log(weatherData);
         console.log("Fetched Weather Data:", weatherData);
 
         if (weatherData && weatherData.main) {
-          const tempValue = weatherData.main.temp - 273.15; 
-          const tempValue2 = tempValue.toFixed(2); 
+          const tempValue = weatherData.main.temp - 273.15;
+          const tempValue2 = tempValue.toFixed(2);
           const humValue = weatherData.main.humidity;
 
           setData(weatherData);
@@ -54,8 +57,33 @@ export default function Content() {
     };
 
     fetchWeatherData();
-  }, []); 
+  }, []);
 
+  const defaultWeatherData = {
+    temperature: "20 °C",
+    wind: "10 km/h",
+    description: "Clear",
+    forecast: [
+      { day: 1, temperature: 30, wind: 12 },
+      { day: 2, temperature: 25, wind: 10 },
+      { day: 3, temperature: 28, wind: 15 },
+      { day: 4, temperature: 20, wind: 18 },
+      { day: 5, temperature: 22, wind: 12 },
+      { day: 6, temperature: 26, wind: 14 },
+      { day: 7, temperature: 30, wind: 15 },
+      { day: 8, temperature: 20, wind: 18 },
+      { day: 9, temperature: 28, wind: 15 },
+      { day: 10, temperature: 20, wind: 18 },
+    ],
+  };
+
+  defaults.maintainAspectRatio = false;
+  defaults.responsive = true;
+
+  defaults.plugins.title.display = true;
+  defaults.plugins.title.align = "start";
+  defaults.plugins.title.font.size = 20;
+  defaults.plugins.title.color = "black";
 
   return (
     <div className="content">
@@ -82,92 +110,70 @@ export default function Content() {
           </div>
         </div>
         <div className="gauge">
-          <div className="gauge-box" style={{height:"300px",width:"300px"}}>
-          <Doughnut
-          data={{
-            labels:["Temperature(°C)","Humidity(%)"],
-            datasets:[{
-                label:["Weather"],
-                data:[temp,humidity]
-                
-            }]
-          }}
-          />
+          <div
+            className="gauge-box"
+            style={{ height: "300px", width: "300px" }}
+          >
+            <Doughnut
+              data={{
+                labels: ["Temperature(°C)", "Humidity(%)"],
+                datasets: [
+                  {
+                    label: ["Weather"],
+                    data: [temp, humidity],
+                  },
+                ],
+              }}
+              options={{
+                plugins: {
+                  title: {
+                    text: "Weather Report",
+                  },
+                },
+              }}
+            />
           </div>
         </div>
       </div>
       <div className="second-row">
-      <div className="line">
-      <div className="line-box" style={{height:"700px",display:"flex",justifyContent:"center",alignItems:"center"}}>
-      <Line
-  data={{
-    labels: [temp],  // Use temperature for the x-axis labels (e.g., current temperature)
-    datasets: [
-      {
-        label: "Temperature (°C)",  // Label for temperature
-        data: [temp],  // Temperature data (converted to Celsius)
-        backgroundColor: "#064ff0",  // Line color for temperature
-        borderColor: "#064ff0",  // Border color for temperature line
-        fill: false,  // Don't fill the area under the line
-        tension: 0.1,  // Optional smooth curve for the temperature line
-        pointRadius: 5,  // Size of the temperature data point
-        pointBackgroundColor: "#064ff0",  // Color of temperature data points
-        pointBorderColor: "#ffffff",  // Border color for temperature points
-        pointBorderWidth: 2,  // Border width for temperature points
-        borderWidth: 2,  // Line border width for temperature
-      },
-      {
-        label: "Humidity (%)",  // Label for humidity
-        data: [humidity],  // Humidity data
-        backgroundColor: "#ff3030",  // Line color for humidity
-        borderColor: "#ff3030",  // Border color for humidity line
-        fill: false,  // Don't fill the area under the line
-        tension: 0.1,  // Optional smooth curve for the humidity line
-        pointRadius: 5,  // Size of the humidity data point
-        pointBackgroundColor: "#ff3030",  // Color of humidity data points
-        pointBorderColor: "#ffffff",  // Border color for humidity points
-        pointBorderWidth: 2,  // Border width for humidity points
-        borderWidth: 2,  // Line border width for humidity
-      }
-    ]
-  }}
-  options={{
-    scales: {
-      x: {
-        min: 0,  // Set min value for x-axis based on temperature
-        max: 100,  // Set max value for x-axis based on temperature
-        title: {
-          display: true,
-          text: 'Temperature (°C)'          
-        },
-        ticks: {
-          stepSize: 10,  // Optional: Set step size for y-axis
-        },
-      },
-      y: {
-        min: 0,  // Min value for y-axis (humidity percentage range)
-        max: 100,  // Max value for y-axis (humidity percentage)
-        ticks: {
-          stepSize: 10,  // Optional: Set step size for y-axis
-        },
-        title: {
-          display: true,
-          text: 'Humidity (%)',  // Label for y-axis
-        },
-      }
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',  // Position of the legend
-      },
-    }
-  }}
-/>
-
-
-      </div>
-      </div>
+        <div className="line">
+          <div
+            className="line-box"
+            style={{
+              height: "700px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Line
+              data={{
+                labels: defaultWeatherData.forecast.map((e) => e.day),
+                datasets: [
+                  {
+                    label: "Temperature",
+                    data: defaultWeatherData.forecast.map((e) => e.temperature),
+                    backgroundColor: "#064ff0",
+                    borderColor: "#064ff0",
+                  },
+                  {
+                    label: "Wind",
+                    data: defaultWeatherData.forecast.map((e) => e.wind),
+                    backgroundColor: "#ff3030",
+                    borderColor: "#ff3030",
+                  },
+                ],
+              }}
+              options={{
+                plugins: {
+                  title: {
+                    text: "Default Weather Report",
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
