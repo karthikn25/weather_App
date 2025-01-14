@@ -3,7 +3,7 @@ import "./Topbar.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Topbar() {
-  const [city, setCity] = useState("delhi"); // Default city is set to Delhi
+  const [city, setCity] = useState(""); // Default city is set to Delhi
   const navigate = useNavigate();
 
   // Function to handle city navigation
