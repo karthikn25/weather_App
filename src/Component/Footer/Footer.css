@@ -1,3 +1,15 @@
 .footer{
     height: 10%;
+    background: #000;
+    text-align: center;
+    color: #fff;
+    >a i{
+        font-size: 30px;
+        cursor: pointer;
+        color: #fff;
+   }
+   >a i:hover{
+    font-size: 35px;
+    color: cyan;
+   }
 }
