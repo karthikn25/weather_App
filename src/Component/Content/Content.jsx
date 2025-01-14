@@ -146,7 +146,6 @@ export default function Content() {
           <div
             className="line-box"
             style={{
-              height: "700px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

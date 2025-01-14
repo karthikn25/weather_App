@@ -72,14 +72,110 @@
     padding: 40px;
     border-radius: 15px;
 }
+.line-box{
+    height: 700px;
+}
 
-@media (max-width: 1045px) and (min-width: 900px) {
-    .data-box {
-        height: 100px;
+@media (max-width: 1500px) and (min-width: 1100px) {
+    .gauge-box{
+        width: 600px;
+    }
+    .data-box{
         width: 350px;
-        padding: 20px;
-        background: #8EF3AC;
-        gap: 5px;
-        border-radius: 10px;
+    }
+    .line{
+        width: 1000px;
+        background: #FEFEFA;
+        padding: 40px;
+        border-radius: 15px;
+    }
+}
+@media (max-width: 1100px) and (min-width: 800px) {
+    .gauge-box{
+        width: 500px;
+        height: 300px;
+    }
+    .data-box{
+        width: 250px;
+    }
+    .line{
+        width: 800px;
+        background: #FEFEFA;
+        padding: 40px;
+        border-radius: 15px;
+    }
+}
+@media (max-width: 800px) and (min-width: 500px) {
+    .first-row {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .gauge-box{
+        width: 400px;
+        height: 300px;
+    }
+    .data-box{
+        width: 350px;
+    }
+    .line{
+        width: 450px;
+        background: #FEFEFA;
+        padding: 40px;
+        border-radius: 15px;
+    }
+    .line-box{
+        height: 450px;
+    }
+}
+@media (max-width: 500px) and (min-width: 300px) {
+    .first-row {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    .title {
+        display: flex;
+        font-size: 20px;
+    }
+    .details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        place-items: center;
+        font-size: 20px;
+    
+        >h3:first-child {
+            text-transform: uppercase;
+        }
+    
+        >h3:nth-last-child(1) {
+            text-transform: capitalize;
+        }
+    
+        >h4 {
+            font-size: 16px;
+        }
+    
+    }
+    .gauge-box{
+        width: 300px;
+        height: 300px;
+    }
+    .data-box{
+        width: 350px;
+        height: 55px;
+    }
+    .line{
+        width: 300px;
+        background: #FEFEFA;
+        padding: 40px;
+        border-radius: 15px;
+    }
+    .line-box{
+        height: 400px;
     }
 }
